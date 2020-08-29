@@ -10,7 +10,7 @@ val search = "https://www.trendyol.com/tum--urunler?q=elbise"
 val product = "https://www.trendyol.com/{BrandName-or-CategoryName}/{ProductName}-p-{ContentId}?boutiqueId={BoutiqueId}&merchantId={MerchantId}"
 
 
-fun main(){
+fun main2(){
     println(Long.MAX_VALUE)
     val a = BaseConversion.encode(123)
 

@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  trendyol-case:
+    image: trendyol-case
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+      - redis-db
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=admin
+      - REDIS_HOST=redis
+
+  mysql-db:
+    image: mysql:5.7
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: 'trendyol'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'admin'
+      MYSQL_ROOT_PASSWORD: 'admin'
+    volumes:
+      - trendyol-case-db:/var/lib/mysql
+
+
+  redis-db:
+    image: "redis:6.0.6"
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis-data:/var/lib/redis
+
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+volumes:
+  trendyol-case-db:

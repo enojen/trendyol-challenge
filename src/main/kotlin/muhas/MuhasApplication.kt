@@ -7,11 +7,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.data.redis.connection.RedisConnectionFactory
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
 import org.springframework.data.redis.support.atomic.RedisAtomicLong
 
 
@@ -28,23 +26,18 @@ fun main(args: Array<String>) {
 @Configuration
 @EnableRedisRepositories(value = ["muhas.repository.redis"])
 @EnableJpaRepositories(value = ["muhas.repository.mysql"])
-class RedisConfig {
+class Config {
 
     @Bean
-    fun redisConnectionFactory(): RedisConnectionFactory {
-        return JedisConnectionFactory()
-    }
-
-    @Bean
-    fun redisTemplate(): RedisTemplate<*, *> {
+    fun redisTemplate(connectionFactory:RedisConnectionFactory): RedisTemplate<*, *> {
         val template = RedisTemplate<Any, Any>()
-        template.setConnectionFactory(redisConnectionFactory())
+        template.setConnectionFactory(connectionFactory)
         template.setDefaultSerializer(GenericJackson2JsonRedisSerializer())
         return template
     }
 
     @Bean
-    fun shortLinkCounter(): RedisAtomicLong {
-        return RedisAtomicLong("SHORTLINK_COUNTER", redisConnectionFactory())
+    fun shortLinkCounter(connectionFactory:RedisConnectionFactory): RedisAtomicLong {
+        return RedisAtomicLong("SHORTLINK_COUNTER", connectionFactory)
     }
 }
