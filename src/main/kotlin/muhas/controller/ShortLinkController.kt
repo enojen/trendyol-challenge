@@ -2,8 +2,9 @@ package muhas.controller
 
 import muhas.DeepLinkRequest
 import muhas.ShortLink
-import muhas.repository.CounterRepo
-import muhas.repository.ShortLinkRepo
+import muhas.repository.redis.CounterRepo
+import muhas.repository.mysql.ShortLinkRepo
+import muhas.services.ShortLinkService
 import muhas.services.UrlConverterService
 import muhas.util.BaseConversion
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,6 +17,7 @@ import java.net.URL
 @RestController
 class ShortLinkController(val urlConverterService: UrlConverterService,
                           val shortLinkRepo: ShortLinkRepo,
+                          val shortLiService: ShortLinkService,
                           val counterRepo: CounterRepo
                           ) {
 
@@ -62,9 +64,8 @@ class ShortLinkController(val urlConverterService: UrlConverterService,
 
         val hash = URL(a.url).path.split("/")[1]
 
-        val shortLink = shortLinkRepo.findById(hash)
+        val shortLink = shortLiService.findById(hash)
 
-        println(shortLink::class)
         return shortLink.map {
             ShortLinkResponse(it.webUrl, it.deepLink)
         }.orElseGet {

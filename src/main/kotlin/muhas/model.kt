@@ -1,9 +1,9 @@
 package muhas
 
-import org.springframework.data.annotation.Id
 import java.io.Serializable
 import java.net.URL
-
+import javax.persistence.Entity
+import javax.persistence.Table
 
 
 data class WebUrl(val url: String) {
@@ -24,12 +24,13 @@ data class DeepLink(val url: String) {
     }
 }
 
-
-data class ShortLink(
-        @Id
-        val shortLink: String,
-        val deepLink: String,
-        val webUrl: String
+@Entity
+@Table
+class ShortLink(
+        @javax.persistence.Id
+        var shortLink: String,
+        var deepLink: String,
+        var webUrl: String
 ) : Serializable
 
 

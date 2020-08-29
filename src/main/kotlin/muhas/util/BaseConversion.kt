@@ -28,7 +28,7 @@ object BaseConversion {
 
         var decoded = 0.0
 
-        //counter is used to avoid reversing input string
+        //shortLinkCounter is used to avoid reversing input string
         var counter = 1
         for (i in 0 until length) {
             decoded += allowedString.indexOf(characters[i]) * Math.pow(base.toDouble(), (length - counter).toDouble())

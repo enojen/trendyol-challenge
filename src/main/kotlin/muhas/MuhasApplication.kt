@@ -1,18 +1,22 @@
 package muhas
 
-import com.couchbase.client.java.Bucket
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 import org.springframework.boot.runApplication
-import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration
-import org.springframework.data.couchbase.repository.config.EnableCouchbaseRepositories
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.data.redis.connection.RedisConnectionFactory
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory
+import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
+import org.springframework.data.redis.support.atomic.RedisAtomicLong
 
 
-@SpringBootApplication(exclude = [DataSourceAutoConfiguration::class])
+@SpringBootApplication
+@EnableCaching
 class MuhasApplication
 
 
@@ -21,33 +25,26 @@ fun main(args: Array<String>) {
 }
 
 
-
 @Configuration
-@EnableCouchbaseRepositories(basePackages = ["com.muhas.repository"])
-@CacheConfig
-@EnableCaching
-class MyCouchbaseConfig : AbstractCouchbaseConfiguration() {
+@EnableRedisRepositories(value = ["muhas.repository.redis"])
+@EnableJpaRepositories(value = ["muhas.repository.mysql"])
+class RedisConfig {
 
-    override fun getConnectionString(): String {
-        return "localhost"
-    }
-
-    override fun getPassword(): String {
-        return "123456"
-    }
-
-    override fun getBucketName(): String {
-        return "test"
-    }
-
-    override fun getUserName(): String {
-        return "root"
+    @Bean
+    fun redisConnectionFactory(): RedisConnectionFactory {
+        return JedisConnectionFactory()
     }
 
     @Bean
-    @Throws(Exception::class)
-    fun campusBucket(): Bucket {
+    fun redisTemplate(): RedisTemplate<*, *> {
+        val template = RedisTemplate<Any, Any>()
+        template.setConnectionFactory(redisConnectionFactory())
+        template.setDefaultSerializer(GenericJackson2JsonRedisSerializer())
+        return template
+    }
 
-        return couchbaseCluster(couchbaseClusterEnvironment()).bucket("test")
+    @Bean
+    fun shortLinkCounter(): RedisAtomicLong {
+        return RedisAtomicLong("SHORTLINK_COUNTER", redisConnectionFactory())
     }
 }
