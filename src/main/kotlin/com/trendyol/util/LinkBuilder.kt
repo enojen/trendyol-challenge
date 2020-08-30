@@ -28,15 +28,7 @@ class LinkBuilder {
         return TyLink(uri)
     }
 
-    fun buildUri(schema: String, host: String): String {
-        return builder
-                .scheme(schema)
-                .host(host)
-                .build()
-                .toUriString()
-    }
-
-    fun buildLink(schema: String = "http", host: String): String {
+    private fun buildUri(schema: String, host: String): String {
         return builder
                 .scheme(schema)
                 .host(host)

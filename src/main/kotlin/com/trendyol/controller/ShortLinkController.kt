@@ -15,14 +15,8 @@ class ShortLinkController(val shortLinkService: ShortLinkService) {
 
     @GetMapping
     fun details(@RequestBody link: Link): Any {
-        val shortLinkHash = link.pathSegments.last()
-        val shortLink = shortLinkService.findById(shortLinkHash)
-
-        return shortLink.map {
-            ShortLinkResponse(it.link, it.deepLink)
-        }.orElseGet {
-            ShortLinkResponse(error = "Not found", deepLink = "", webUrl = "")
-        }
+        val shortLink = shortLinkService.findShortLink(link)
+        return ShortLinkResponse(shortLink.link, shortLink.deepLink)
     }
 
     @PostMapping("/from-deeplink")

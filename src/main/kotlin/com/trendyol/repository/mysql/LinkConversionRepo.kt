@@ -1,10 +1,10 @@
 package com.trendyol.repository.mysql
 
-import com.trendyol.model.UrlRequest
+import com.trendyol.model.LinkConversion
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UrlRequestRepo : CrudRepository<UrlRequest, Long>
+interface LinkConversionRepo : CrudRepository<LinkConversion, Long>
 
 

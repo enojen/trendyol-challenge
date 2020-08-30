@@ -14,7 +14,7 @@ import com.trendyol.model.Uri
 import org.springframework.stereotype.Service
 
 @Service
-class LinkConverterService(sectionService: SectionService) {
+class LinkConverter(sectionService: SectionService) {
 
     val linkEncoders = listOf(
             HomeUrlEncoder(sectionService),

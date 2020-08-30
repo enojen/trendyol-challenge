@@ -2,7 +2,7 @@ package com.trendyol.model
 
 import org.springframework.web.util.UriComponentsBuilder
 
-abstract class Uri(uri: String) {
+abstract class Uri(val uri: String) {
 
     private val uriParts = UriComponentsBuilder.fromUriString(uri).build()
 
