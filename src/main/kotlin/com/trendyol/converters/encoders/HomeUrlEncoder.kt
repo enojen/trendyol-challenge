@@ -1,30 +1,30 @@
 package com.trendyol.converters.encoders
 
-import com.trendyol.model.DeepLink
-import com.trendyol.model.WebUrl
+import com.trendyol.converters.HOME_PARAM
+import com.trendyol.converters.PAGE_PARAM
+import com.trendyol.converters.SECTION_ID
+import com.trendyol.model.TyLink
 import com.trendyol.services.SectionService
 import com.trendyol.util.LinkBuilder
 
 data class HomeUrlEncoder(val sectionService: SectionService) : Encoder {
 
-    override val predicate = { url: WebUrl ->
-        url.path.startsWith("/butik/liste/")
-                || (url.path == "/")
-                || (url.path == "")
-                || (url.path == "/butik/liste")
+    override val predicate = { link: TyLink ->
+        link.path.startsWith("/butik/liste/")
+                || (link.path == "/")
+                || (link.path == "")
+                || (link.path == "/butik/liste")
     }
 
-    override val encode = { url: WebUrl ->
-        val linkBuilder = LinkBuilder("ty://").addParam(Pair("Page", "Home"))
+    override val encode = { link: TyLink ->
+        val linkBuilder = LinkBuilder().addParam(PAGE_PARAM, HOME_PARAM)
 
-        val paths = url.path.split("/")
-
-        if (paths.size == 4) {
-            val sectionName = paths[3]
+        if (link.pathSegments.size == 3) {
+            val sectionName = link.pathSegments[2]
             val sectionId = sectionService.getSectionId(sectionName)
-            linkBuilder.addParam(Pair("SectionId", sectionId.toString()))
+            linkBuilder.addParam(SECTION_ID, sectionId.toString())
         }
 
-        DeepLink(linkBuilder.build())
+        linkBuilder.buildDeepLink()
     }
 }

@@ -8,37 +8,37 @@ import com.trendyol.converters.encoders.DefaultUrlEncoder
 import com.trendyol.converters.encoders.HomeUrlEncoder
 import com.trendyol.converters.encoders.ProductUrlEncoder
 import com.trendyol.converters.encoders.SearchUrlEncoder
-import com.trendyol.model.DeepLink
-import com.trendyol.model.WebUrl
+import com.trendyol.model.TyDeepLink
+import com.trendyol.model.TyLink
+import com.trendyol.model.Uri
 import org.springframework.stereotype.Service
 
 @Service
-class UrlConverterService(sectionService: SectionService) {
+class LinkConverterService(sectionService: SectionService) {
 
-    val urlEncoders = listOf(
+    val linkEncoders = listOf(
             HomeUrlEncoder(sectionService),
             ProductUrlEncoder,
             SearchUrlEncoder,
             DefaultUrlEncoder
     )
 
-    val urlDecoders = listOf(
+    val linkDecoders = listOf(
             HomeUrlDecoder(sectionService),
             ProductUrlDecoder,
             SearchUrlDecoder,
             DefaultUrlDecoder
     )
 
-    fun toDeepLink(webUrl: WebUrl): DeepLink {
-        return urlEncoders
-                .first { it.predicate(webUrl) }
-                .encode(webUrl)
+    fun toDeepLink(link: TyLink): TyDeepLink {
+        return linkEncoders
+                .first { it.predicate(link) }
+                .encode(link)
     }
 
-    fun toWebUrl(deepLink: DeepLink): WebUrl {
-        return urlDecoders
+    fun toLink(deepLink: TyDeepLink): TyLink {
+        return linkDecoders
                 .first { it.predicate(deepLink) }
                 .decode(deepLink)
     }
-
 }

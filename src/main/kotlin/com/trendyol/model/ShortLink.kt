@@ -12,6 +12,6 @@ class ShortLink(
         @Id
         var shortLink: String,
         var deepLink: String,
-        var webUrl: String
+        var link: String
 ) : Serializable
 

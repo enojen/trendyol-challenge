@@ -1,9 +1,9 @@
 package com.trendyol.converters.decoders
 
-import com.trendyol.model.DeepLink
-import com.trendyol.model.WebUrl
+import com.trendyol.model.TyDeepLink
+import com.trendyol.model.TyLink
 
 interface Decoder {
-    val predicate: (DeepLink) -> Boolean
-    val decode: (DeepLink) -> WebUrl
+    val predicate: (TyDeepLink) -> Boolean
+    val decode: (TyDeepLink) -> TyLink
 }

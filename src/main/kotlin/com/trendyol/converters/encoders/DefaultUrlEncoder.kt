@@ -1,13 +1,14 @@
 package com.trendyol.converters.encoders
 
-import com.trendyol.model.DeepLink
-import com.trendyol.model.WebUrl
+import com.trendyol.converters.TRENDYOL_HOMEPAGE_DEEPLINK
+import com.trendyol.model.TyDeepLink
+import com.trendyol.model.TyLink
 
 
 object DefaultUrlEncoder : Encoder {
-    override val predicate = { url: WebUrl -> true }
+    override val predicate = { link: TyLink -> true }
 
-    override val encode = { p: WebUrl ->
-        DeepLink("ty://?Page=Home")
+    override val encode = { link: TyLink ->
+        TyDeepLink(TRENDYOL_HOMEPAGE_DEEPLINK)
     }
 }

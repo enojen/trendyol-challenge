@@ -9,6 +9,6 @@ class UrlRequest(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Long,
-        var webUrl: String,
+        var link: String,
         var deepLink: String
 )

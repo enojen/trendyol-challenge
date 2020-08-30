@@ -1,37 +1,36 @@
 package com.trendyol.converters.encoders
 
-import com.trendyol.model.DeepLink
-import com.trendyol.model.WebUrl
+import com.trendyol.converters.*
+import com.trendyol.model.TyLink
 import com.trendyol.util.LinkBuilder
 
 object ProductUrlEncoder : Encoder {
     private val regex = Regex("(.*)-p-(\\d+)")
 
-    override val predicate = { url: WebUrl ->
-        val paths = url.path.split("/")
-        paths.size == 3 && regex.matches(paths[2])
+    override val predicate = { link: TyLink ->
+        link.pathSegments.size == 2 && regex.matches(link.pathSegments[1])
     }
 
-    override val encode = { url: WebUrl ->
-        val linkBuilder = LinkBuilder("ty://")
-        val contentId = getContentId(url)
+    override val encode = { link: TyLink ->
+        val linkBuilder = LinkBuilder()
+        val contentId = getContentId(link)
 
-        linkBuilder.addParam(Pair("Page", "Product"))
-                   .addParam(Pair("ContentId", contentId))
+        linkBuilder.addParam(PAGE_PARAM, PRODUCT_PARAM)
+                   .addParam(CONTENT_ID_PARAM, contentId)
 
-        url.params.forEach {
-            if (it.first == "boutiqueId")
-                linkBuilder.addParam(Pair("CampaignId", it.second))
-            if (it.first == "merchantId")
-                linkBuilder.addParam(Pair("MerchantId", it.second))
+        link.params.forEach {
+            if (it.first == BOUTIQUE_ID)
+                linkBuilder.addParam(CAMPAIGN_ID, it.second)
+            if (it.first == MERCHANT_ID)
+                linkBuilder.addParam(MERCHANT_ID_PARAM, it.second)
         }
 
-        DeepLink(linkBuilder.build())
+        linkBuilder.buildDeepLink()
     }
 
-    private fun getContentId(url: WebUrl): String {
-        val productNamePath = url.path.split("/")[2]
-        val (_, contentId) = regex.find(productNamePath)!!.destructured
+    private fun getContentId(link: TyLink): String {
+        val productSegment = link.pathSegments[1]
+        val (_, contentId) = regex.find(productSegment)!!.destructured
         return contentId
     }
 }

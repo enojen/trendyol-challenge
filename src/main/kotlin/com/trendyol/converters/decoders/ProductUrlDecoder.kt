@@ -1,29 +1,29 @@
 package com.trendyol.converters.decoders
 
-import com.trendyol.model.DeepLink
-import com.trendyol.model.WebUrl
+import com.trendyol.converters.*
+import com.trendyol.model.TyDeepLink
 import com.trendyol.util.LinkBuilder
 
 
 object ProductUrlDecoder : Decoder {
-    override val predicate = { lnk: DeepLink ->
-        lnk.params.contains(Pair("Page", "Product"))
+    override val predicate = { deepLink: TyDeepLink ->
+        deepLink.params.contains(Pair(PAGE_PARAM, PRODUCT_PARAM))
     }
 
-    override val decode = { lnk: DeepLink ->
-        val lb = LinkBuilder("https://www.trendyol.com")
+    override val decode = { deepLink: TyDeepLink ->
+        val linkBuilder = LinkBuilder()
 
-        lnk.params.forEach {
-            if (it.first == "ContentId")
-                lb.addPath("/brand").addPath("name-p-${it.second}")
+        deepLink.params.forEach {
+            if (it.first == CONTENT_ID_PARAM)
+                linkBuilder.addPath("/brand").addPath("/name-p-${it.second}")
 
-            if (it.first == "CampaignId")
-                lb.addParam("boutiqueId" to it.second)
+            if (it.first == CAMPAIGN_ID)
+                linkBuilder.addParam(BOUTIQUE_ID, it.second)
 
-            if (it.first == "MerchantId")
-                lb.addParam("merchantId" to it.second)
+            if (it.first == MERCHANT_ID_PARAM)
+                linkBuilder.addParam(MERCHANT_ID, it.second)
         }
 
-        WebUrl(lb.build())
+        linkBuilder.buildLink()
     }
 }

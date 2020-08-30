@@ -1,25 +1,23 @@
 package com.trendyol.converters.decoders
 
-import com.trendyol.model.DeepLink
-import com.trendyol.model.WebUrl
+import com.trendyol.converters.*
+import com.trendyol.model.TyDeepLink
 import com.trendyol.util.LinkBuilder
 
 
 object SearchUrlDecoder : Decoder {
-    override val predicate = { lnk: DeepLink ->
-        lnk.params.contains(Pair("Page", "Search"))
+    override val predicate = { deepLink: TyDeepLink ->
+        deepLink.params.contains(Pair(PAGE_PARAM, SEARCH_PARAM))
     }
 
-    override val decode = { lnk: DeepLink ->
-        val lb = LinkBuilder("https://www.trendyol.com")
+    override val decode = { deepLink: TyDeepLink ->
+        val linkBuilder = LinkBuilder().addPath(ALL_PRODUCTS)
+        val queryParam = deepLink.getParam(QUERY_PARAM)
 
-        lb.addPath("/tum--urunler")
-
-        lnk.params.forEach {
-            if (it.first == "Query")
-                lb.addParam("q" to it.second)
+        queryParam?.let {
+            linkBuilder.addParam(Q_PARAM, it.second)
         }
 
-        WebUrl(lb.build())
+        linkBuilder.buildLink()
     }
 }

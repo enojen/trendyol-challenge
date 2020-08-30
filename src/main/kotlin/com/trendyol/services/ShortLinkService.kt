@@ -1,8 +1,8 @@
 package com.trendyol.services
 
-import com.trendyol.model.DeepLink
+import com.trendyol.model.TyDeepLink
 import com.trendyol.model.ShortLink
-import com.trendyol.model.WebUrl
+import com.trendyol.model.TyLink
 import com.trendyol.repository.mysql.ShortLinkRepo
 import com.trendyol.repository.redis.CounterRepo
 import com.trendyol.util.BaseConversion
@@ -12,31 +12,31 @@ import java.util.*
 
 
 @Service
-class ShortLinkService(val urlConverterService: UrlConverterService,
+class ShortLinkService(val linkConverterService: LinkConverterService,
                        val shortLinkRepo: ShortLinkRepo,
                        val counterRepo: CounterRepo) {
 
-    fun createShortLink(webUrl: WebUrl): ShortLink {
+    fun createShortLink(link: TyLink): ShortLink {
         val shortLinkHash = generateHash()
-        val deepLink = urlConverterService.toDeepLink(webUrl)
+        val deepLink = linkConverterService.toDeepLink(link)
 
         val shortLink = ShortLink(
                 shortLink = shortLinkHash,
                 deepLink = deepLink.url,
-                webUrl = webUrl.url
+                link = link.url
         )
 
         return shortLinkRepo.save(shortLink)
     }
 
-    fun createShortLink(deepLink: DeepLink): ShortLink {
+    fun createShortLink(deepLink: TyDeepLink): ShortLink {
         val shortLinkHash = generateHash()
-        val webUrl = urlConverterService.toWebUrl(deepLink)
+        val link = linkConverterService.toLink(deepLink)
 
         val shortLink = ShortLink(
                 shortLink = shortLinkHash,
                 deepLink = deepLink.url,
-                webUrl = webUrl.url
+                link = link.url
         )
 
         return shortLinkRepo.save(shortLink)

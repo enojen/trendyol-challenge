@@ -1,20 +1,24 @@
 package com.trendyol.converters.encoders
 
-import com.trendyol.model.DeepLink
-import com.trendyol.model.WebUrl
+import com.trendyol.converters.*
+import com.trendyol.model.TyLink
 import com.trendyol.util.LinkBuilder
 
+
 object SearchUrlEncoder : Encoder {
-    override val predicate = { p: WebUrl -> p.path == "/tum--urunler" }
 
-    override val encode = { url: WebUrl ->
-        val linkBuilder = LinkBuilder("ty://").addParam(Pair("Page", "Search"))
+    override val predicate = { link: TyLink ->
+        link.path == ALL_PRODUCTS && link.hasParam(Q_PARAM)
+    }
 
-        url.params.forEach {
-            if (it.first == "q")
-                linkBuilder.addParam("Query" to it.second)
+    override val encode = { link: TyLink ->
+        val linkBuilder = LinkBuilder().addParam(PAGE_PARAM, SEARCH_PARAM)
+
+        link.params.forEach {
+            if (it.first == Q_PARAM)
+                linkBuilder.addParam(QUERY_PARAM, it.second)
         }
 
-        DeepLink(linkBuilder.build())
+        linkBuilder.buildDeepLink()
     }
 }
