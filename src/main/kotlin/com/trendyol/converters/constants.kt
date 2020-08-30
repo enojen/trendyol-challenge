@@ -8,6 +8,10 @@ const val TRENDYOL_HOMEPAGE_DEEPLINK = "ty://?Page=Home"
 
 const val ALL_PRODUCTS = "/tum--urunler"
 
+const val HOME_PATH = "/butik/liste"
+const val BLANK = ""
+const val SLASH = "/"
+
 const val Q_PARAM = "q"
 const val PAGE_PARAM = "Page"
 const val SEARCH_PARAM = "Search"

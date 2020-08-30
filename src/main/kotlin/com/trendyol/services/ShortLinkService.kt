@@ -29,7 +29,7 @@ class ShortLinkService(val linkConverterService: LinkConverter,
         return createShortLink(link = link, deepLink = deepLink)
     }
 
-    @Cacheable(key = "#link.url", cacheNames = ["short-link-cache"])
+    @Cacheable(key = "#link.url", cacheNames = ["cache"])
     fun findShortLink(link: Link): ShortLink {
         val hash = link.pathSegments.last()
         val shortLink = shortLinkRepo.findById(hash).orElseThrow { ShortLinkNotFoundException() }

@@ -1,8 +1,6 @@
 package com.trendyol.converters.encoders
 
-import com.trendyol.converters.HOME_PARAM
-import com.trendyol.converters.PAGE_PARAM
-import com.trendyol.converters.SECTION_ID_PARAM
+import com.trendyol.converters.*
 import com.trendyol.model.TyLink
 import com.trendyol.services.SectionService
 import com.trendyol.util.LinkBuilder
@@ -10,10 +8,7 @@ import com.trendyol.util.LinkBuilder
 data class HomeUrlEncoder(val sectionService: SectionService) : Encoder {
 
     override val predicate = { link: TyLink ->
-        link.path.startsWith("/butik/liste/")
-                || (link.path == "/")
-                || (link.path == "")
-                || (link.path == "/butik/liste")
+        link.path.startsWith(HOME_PATH) or (link.path == SLASH) or (link.path.isBlank())
     }
 
     override val encode = { link: TyLink ->

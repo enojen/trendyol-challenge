@@ -1,6 +1,7 @@
 package com.trendyol.converters.decoders
 
 import com.trendyol.converters.HOME_PARAM
+import com.trendyol.converters.HOME_PATH
 import com.trendyol.converters.PAGE_PARAM
 import com.trendyol.converters.SECTION_ID_PARAM
 import com.trendyol.model.TyDeepLink
@@ -19,7 +20,7 @@ data class HomeUrlDecoder(val sectionService: SectionService) : Decoder {
 
         sectionIdParam?.let {
             val sectionName = sectionService.getSectionName(it.second.toInt())
-            linkBuilder.addPath("/butik/liste/$sectionName")
+            linkBuilder.addPath(HOME_PATH).addPath("/$sectionName")
         }
 
         linkBuilder.buildLink()
