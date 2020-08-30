@@ -1,9 +1,7 @@
 package com.trendyol.converters.decoders
 
-import muhas.converters.decoders.DefaultUrlDecoder
-import muhas.converters.encoders.DefaultUrlEncoder
-import muhas.model.DeepLink
-import muhas.model.WebUrl
+import com.trendyol.model.DeepLink
+import com.trendyol.model.WebUrl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

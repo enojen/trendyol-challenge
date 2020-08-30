@@ -1,14 +1,7 @@
 package com.trendyol.converters.decoders
 
-import io.mockk.every
-import io.mockk.mockk
-import muhas.converters.decoders.DefaultUrlDecoder
-import muhas.converters.decoders.HomeUrlDecoder
-import muhas.converters.decoders.ProductUrlDecoder
-import muhas.converters.encoders.DefaultUrlEncoder
-import muhas.model.DeepLink
-import muhas.model.WebUrl
-import muhas.services.SectionService
+import com.trendyol.model.DeepLink
+import com.trendyol.model.WebUrl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
