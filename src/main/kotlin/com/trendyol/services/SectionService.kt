@@ -29,7 +29,7 @@ class SectionService {
 
     @PostConstruct
     fun init() {
-        val json = DefaultResourceLoader().getResource(mappingFile).file.readText(charset = Charsets.UTF_8)
+        val json = DefaultResourceLoader().getResource(mappingFile).inputStream.bufferedReader(charset = Charsets.UTF_8)
         val mapper = jacksonObjectMapper()
         val sections: List<Section> = mapper.readValue(json)
 

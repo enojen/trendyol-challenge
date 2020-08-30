@@ -72,7 +72,7 @@ class ShortLinkControllerTest(@Autowired val mockMvc: MockMvc) {
 
         every { shortLinkService.findShortLink(link) } returns shortLink
 
-        mockMvc.perform(get("/api/shortlink")
+        mockMvc.perform(post("/api/shortlink/details")
                 .content(request)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -89,7 +89,7 @@ class ShortLinkControllerTest(@Autowired val mockMvc: MockMvc) {
 
         every { shortLinkService.findShortLink(any()) } throws ShortLinkNotFoundException()
 
-        mockMvc.perform(get("/api/shortlink")
+        mockMvc.perform(post("/api/shortlink/details")
                 .content(request)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

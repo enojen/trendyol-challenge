@@ -18,7 +18,7 @@ class ShortLinkController(val shortLinkService: ShortLinkService) : BaseControll
     @Value("\${shortlink.domain}")
     val shortLinkDomain: String = "localhost/%s"
 
-    @GetMapping
+    @PostMapping("/details")
     fun details(@RequestBody link: Link): Any {
         val shortLink = shortLinkService.findShortLink(link)
         return Result.Success()
