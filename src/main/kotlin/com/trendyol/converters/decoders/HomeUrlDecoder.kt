@@ -2,7 +2,7 @@ package com.trendyol.converters.decoders
 
 import com.trendyol.converters.HOME_PARAM
 import com.trendyol.converters.PAGE_PARAM
-import com.trendyol.converters.SECTION_ID
+import com.trendyol.converters.SECTION_ID_PARAM
 import com.trendyol.model.TyDeepLink
 import com.trendyol.services.SectionService
 import com.trendyol.util.LinkBuilder
@@ -15,7 +15,7 @@ data class HomeUrlDecoder(val sectionService: SectionService) : Decoder {
 
     override val decode = { deepLink: TyDeepLink ->
         val linkBuilder = LinkBuilder()
-        val sectionIdParam = deepLink.getParam(SECTION_ID)
+        val sectionIdParam = deepLink.getParam(SECTION_ID_PARAM)
 
         sectionIdParam?.let {
             val sectionName = sectionService.getSectionName(it.second.toInt())

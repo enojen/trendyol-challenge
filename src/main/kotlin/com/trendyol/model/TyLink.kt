@@ -1,6 +1,6 @@
 package com.trendyol.model
 
-class Link(url: String) : Uri(url)
+data class Link(val url: String) : Uri(url)
 
 
 data class TyLink(val url: String) : Uri(url) {

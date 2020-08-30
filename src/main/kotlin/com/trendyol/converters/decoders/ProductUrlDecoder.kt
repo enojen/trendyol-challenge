@@ -17,11 +17,11 @@ object ProductUrlDecoder : Decoder {
             if (it.first == CONTENT_ID_PARAM)
                 linkBuilder.addPath("/brand").addPath("/name-p-${it.second}")
 
-            if (it.first == CAMPAIGN_ID)
-                linkBuilder.addParam(BOUTIQUE_ID, it.second)
+            if (it.first == CAMPAIGN_ID_PARAM)
+                linkBuilder.addParam(BOUTIQUE_ID_PARAM, it.second)
 
-            if (it.first == MERCHANT_ID_PARAM)
-                linkBuilder.addParam(MERCHANT_ID, it.second)
+            if (it.first == MERCHANT_ID_PARAM_UPPER)
+                linkBuilder.addParam(MERCHANT_ID_PARAM_LOWER, it.second)
         }
 
         linkBuilder.buildLink()

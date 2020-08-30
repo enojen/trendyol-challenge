@@ -1,31 +1,53 @@
 package com.trendyol.controller
 
+import com.trendyol.ShortLinkNotFoundException
 import com.trendyol.model.Link
 import com.trendyol.model.TyDeepLink
 import com.trendyol.model.TyLink
-
-import com.trendyol.model.web.ShortLinkResponse
 import com.trendyol.services.ShortLinkService
+import com.trendyol.web.Result
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 
 @RestController
 @RequestMapping("/api/shortlink")
-class ShortLinkController(val shortLinkService: ShortLinkService) {
+class ShortLinkController(val shortLinkService: ShortLinkService) : BaseController() {
+
+    @Value("\${shortlink.domain}")
+    val shortLinkDomain: String = "localhost/%s"
 
     @GetMapping
     fun details(@RequestBody link: Link): Any {
-        val shortLink = shortLinkService.findShortLink(link)
-        return ShortLinkResponse(shortLink.link, shortLink.deepLink)
+        return try {
+            val shortLink = shortLinkService.findShortLink(link)
+            Result.Success()
+                    .add("link", shortLink.link)
+                    .add("deepLink", shortLink.deepLink)
+                    .add("shortLink", shortLinkDomain.format(shortLink.shortLink))
+                    .build()
+
+        } catch (e: ShortLinkNotFoundException) {
+            Result.Error(HttpStatus.NOT_FOUND)
+                    .message("Short link not found")
+                    .build()
+        }
     }
 
     @PostMapping("/from-deeplink")
     fun fromDeepLink(@RequestBody deepLink: TyDeepLink): Any {
-        return shortLinkService.createShortLink(deepLink)
+        val shortLink = shortLinkService.createFromDeepLink(deepLink)
+        return Result.Success()
+                .add("shortLink", shortLinkDomain.format(shortLink.shortLink))
+                .build()
     }
 
     @PostMapping("/from-link")
     fun fromLink(@RequestBody link: TyLink): Any {
-        return shortLinkService.createShortLink(link)
+        val shortLink = shortLinkService.createFromLink(link)
+        return Result.Success()
+                .add("shortLink", shortLinkDomain.format(shortLink.shortLink))
+                .build()
     }
 }

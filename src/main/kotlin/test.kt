@@ -13,22 +13,7 @@ fun String.asDeepLink(): TyDeepLink {
 
 fun main(){
 
-    val v = "ty://?as=as".asDeepLink()
+    val a= "localhost/%s".format("123")
 
-    val d = TyDeepLink("ty://?as=asd")
-
-    val a = UriComponentsBuilder.newInstance()
-            .scheme("ty")
-            .queryParam("12", "123")
-            .path("path1")
-            .path("/path2")
-            .build()
     println(a)
-
-    val b = UriComponentsBuilder.fromHttpUrl("http://localhost/f?asD=as&asD=23").build()
-    val c = UriComponentsBuilder.fromUriString("ty://?Page=Home").build()
-
-    println(b.queryParams)
-    println(c.queryParams)
-    println(c.pathSegments)
 }

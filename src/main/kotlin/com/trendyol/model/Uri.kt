@@ -7,7 +7,7 @@ abstract class Uri(val uri: String) {
     private val uriParts = UriComponentsBuilder.fromUriString(uri).build()
 
     val params = uriParts.queryParams.map {
-        Pair(it.key, it.value[0])
+        Pair(it.key, it.value[0]!!)
     }
 
     val path = uriParts.path!!

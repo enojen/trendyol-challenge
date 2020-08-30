@@ -33,13 +33,12 @@ class ShortLinkServiceTest {
 
     private val shortLinkService = ShortLinkService(linkConverter, shortLinkRepo, counterRepo)
 
-
     @Test
     fun `create shortlink from deep link`() {
 
         every { shortLinkRepo.save(any<ShortLink>()) } returns ShortLink("", "", "")
 
-        val result = shortLinkService.createShortLink(deepLink)
+        val result = shortLinkService.createFromDeepLink(deepLink)
 
         assertEquals("qi", result.shortLink)
         assertEquals(deepLink.url, result.deepLink)
@@ -52,7 +51,7 @@ class ShortLinkServiceTest {
 
         every { shortLinkRepo.save(any<ShortLink>()) } returns ShortLink("", "", "")
 
-        val result = shortLinkService.createShortLink(link)
+        val result = shortLinkService.createFromLink(link)
 
         assertEquals("qi", result.shortLink)
         assertEquals(deepLink.url, result.deepLink)

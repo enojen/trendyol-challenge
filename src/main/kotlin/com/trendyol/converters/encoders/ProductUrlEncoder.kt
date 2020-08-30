@@ -19,10 +19,10 @@ object ProductUrlEncoder : Encoder {
                    .addParam(CONTENT_ID_PARAM, contentId)
 
         link.params.forEach {
-            if (it.first == BOUTIQUE_ID)
-                linkBuilder.addParam(CAMPAIGN_ID, it.second)
-            if (it.first == MERCHANT_ID)
-                linkBuilder.addParam(MERCHANT_ID_PARAM, it.second)
+            if (it.first == BOUTIQUE_ID_PARAM)
+                linkBuilder.addParam(CAMPAIGN_ID_PARAM, it.second)
+            if (it.first == MERCHANT_ID_PARAM_LOWER)
+                linkBuilder.addParam(MERCHANT_ID_PARAM_UPPER, it.second)
         }
 
         linkBuilder.buildDeepLink()
