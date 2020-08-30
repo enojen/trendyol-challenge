@@ -1,15 +1,12 @@
 package com.trendyol.converters
 
 
-
-
 const val TRENDYOL_HOMEPAGE_LINK = "https://www.trendyol.com"
 const val TRENDYOL_HOMEPAGE_DEEPLINK = "ty://?Page=Home"
 
 const val ALL_PRODUCTS = "/tum--urunler"
 
 const val HOME_PATH = "/butik/liste"
-const val BLANK = ""
 const val SLASH = "/"
 
 const val Q_PARAM = "q"

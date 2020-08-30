@@ -1,7 +1,7 @@
 package com.trendyol.services
 
-import com.trendyol.model.TyDeepLink
 import com.trendyol.model.LinkConversion
+import com.trendyol.model.TyDeepLink
 import com.trendyol.model.TyLink
 import com.trendyol.model.Uri
 import com.trendyol.repository.mysql.LinkConversionRepo

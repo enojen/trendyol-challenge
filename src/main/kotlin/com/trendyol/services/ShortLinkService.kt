@@ -8,10 +8,8 @@ import com.trendyol.model.TyLink
 import com.trendyol.repository.mysql.ShortLinkRepo
 import com.trendyol.repository.redis.CounterRepo
 import com.trendyol.util.BaseConversion
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 
 
 @Service
@@ -32,8 +30,7 @@ class ShortLinkService(val linkConverterService: LinkConverter,
     @Cacheable(key = "#link.url", cacheNames = ["cache"])
     fun findShortLink(link: Link): ShortLink {
         val hash = link.pathSegments.last()
-        val shortLink = shortLinkRepo.findById(hash).orElseThrow { ShortLinkNotFoundException() }
-        return shortLink
+        return shortLinkRepo.findById(hash).orElseThrow { ShortLinkNotFoundException() }
     }
 
     private fun generateHash(): String {
