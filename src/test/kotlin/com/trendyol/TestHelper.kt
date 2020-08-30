@@ -6,5 +6,5 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 
 object TestHelper {
 
-    val jsonResult = content().contentType(MediaType.APPLICATION_JSON);
+    val jsonResult = content().contentType(MediaType.APPLICATION_JSON)
 }
