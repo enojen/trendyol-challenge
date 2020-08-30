@@ -20,19 +20,12 @@ class ShortLinkController(val shortLinkService: ShortLinkService) : BaseControll
 
     @GetMapping
     fun details(@RequestBody link: Link): Any {
-        return try {
-            val shortLink = shortLinkService.findShortLink(link)
-            Result.Success()
-                    .add("link", shortLink.link)
-                    .add("deepLink", shortLink.deepLink)
-                    .add("shortLink", shortLinkDomain.format(shortLink.shortLink))
-                    .build()
-
-        } catch (e: ShortLinkNotFoundException) {
-            Result.Error(HttpStatus.NOT_FOUND)
-                    .message("Short link not found")
-                    .build()
-        }
+        val shortLink = shortLinkService.findShortLink(link)
+        return Result.Success()
+                .add("link", shortLink.link)
+                .add("deepLink", shortLink.deepLink)
+                .add("shortLink", shortLinkDomain.format(shortLink.shortLink))
+                .build()
     }
 
     @PostMapping("/from-deeplink")
