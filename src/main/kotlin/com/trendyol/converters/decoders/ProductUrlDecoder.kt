@@ -15,7 +15,7 @@ object ProductUrlDecoder : Decoder {
 
         lnk.params.forEach {
             if (it.first == "ContentId")
-                lb.addPath("/brand/name-p-${it.second}")
+                lb.addPath("/brand").addPath("name-p-${it.second}")
 
             if (it.first == "CampaignId")
                 lb.addParam("boutiqueId" to it.second)

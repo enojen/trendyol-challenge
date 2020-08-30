@@ -1,8 +1,8 @@
 package com.trendyol.services
 
 import com.trendyol.model.DeepLink
+import com.trendyol.model.UrlRequest
 import com.trendyol.model.WebUrl
-import com.trendyol.repository.mysql.UrlRequest
 import com.trendyol.repository.mysql.UrlRequestRepo
 import org.springframework.stereotype.Service
 
@@ -22,7 +22,7 @@ class UrlConverterRequestService(val urlRequestRepo: UrlRequestRepo, val urlConv
     }
 
     fun saveRequest(webUrl: WebUrl, deepLink: DeepLink) {
-        val urlRequest = UrlRequest(0, webUrl = webUrl.url, deepLink = deepLink.url)
+        val urlRequest = UrlRequest(id = 0, webUrl = webUrl.url, deepLink = deepLink.url)
         urlRequestRepo.save(urlRequest)
     }
 

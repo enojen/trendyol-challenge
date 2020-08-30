@@ -20,7 +20,7 @@ class ShortLinkController(val shortLinkService: ShortLinkService) {
     }
 
     @PostMapping("/shortlink/url")
-    fun fromUrl(@RequestBody a: DeepLinkRequest): Any {
+    fun fromWebUrl(@RequestBody a: DeepLinkRequest): Any {
         return shortLinkService.createShortLink(WebUrl(a.url))
     }
 
