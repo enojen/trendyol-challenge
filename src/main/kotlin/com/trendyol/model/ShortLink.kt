@@ -2,13 +2,14 @@ package com.trendyol.model
 
 import java.io.Serializable
 import javax.persistence.Entity
+import javax.persistence.Id
 import javax.persistence.Table
 
 
 @Entity
-@Table
+@Table(name = "short_links")
 class ShortLink(
-        @javax.persistence.Id
+        @Id
         var shortLink: String,
         var deepLink: String,
         var webUrl: String

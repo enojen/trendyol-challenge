@@ -1,6 +1,6 @@
 package com.trendyol.util
 
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class LinkBuilderTest {
@@ -8,7 +8,7 @@ class LinkBuilderTest {
     @Test
     fun `host only url`(){
         val url = LinkBuilder("www.some-host.com").build()
-        Assert.assertEquals("www.some-host.com", url)
+        assertEquals("www.some-host.com", url)
     }
 
     @Test
@@ -18,7 +18,7 @@ class LinkBuilderTest {
                 .addPath("path2")
                 .build()
 
-        Assert.assertEquals("www.some-host.com/path1/path2", url)
+        assertEquals("www.some-host.com/path1/path2", url)
     }
 
     @Test
@@ -28,7 +28,7 @@ class LinkBuilderTest {
                 .addParam("p2" to "P2")
                 .build()
 
-        Assert.assertEquals("www.some-host.com/?p1=P1&p2=P2", url)
+        assertEquals("www.some-host.com/?p1=P1&p2=P2", url)
     }
 
     @Test
@@ -40,6 +40,6 @@ class LinkBuilderTest {
                 .addParam("p2" to "P2")
                 .build()
 
-        Assert.assertEquals("www.some-host.com/path1/path2/?p1=P1&p2=P2", url)
+        assertEquals("www.some-host.com/path1/path2/?p1=P1&p2=P2", url)
     }
 }

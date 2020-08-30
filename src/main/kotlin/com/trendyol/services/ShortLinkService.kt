@@ -45,7 +45,6 @@ class ShortLinkService(val urlConverterService: UrlConverterService,
 
     @Cacheable(key = "#id", cacheNames = ["cache1"])
     fun findById(id: String): Optional<ShortLink> {
-        Thread.sleep(5000)
         return shortLinkRepo.findById(id)
     }
 

@@ -13,17 +13,17 @@ import com.trendyol.model.WebUrl
 import org.springframework.stereotype.Service
 
 @Service
-class UrlConverterService(sectionMappings: SectionService) {
+class UrlConverterService(sectionService: SectionService) {
 
     val urlEncoders = listOf(
-            HomeUrlEncoder(sectionMappings),
+            HomeUrlEncoder(sectionService),
             ProductUrlEncoder,
             SearchUrlEncoder,
             DefaultUrlEncoder
     )
 
     val urlDecoders = listOf(
-            HomeUrlDecoder(sectionMappings),
+            HomeUrlDecoder(sectionService),
             ProductUrlDecoder,
             SearchUrlDecoder,
             DefaultUrlDecoder

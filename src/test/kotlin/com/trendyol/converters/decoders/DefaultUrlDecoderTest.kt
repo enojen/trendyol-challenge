@@ -2,7 +2,7 @@ package com.trendyol.converters.decoders
 
 import com.trendyol.model.DeepLink
 import com.trendyol.model.WebUrl
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 
@@ -15,8 +15,8 @@ class DefaultUrlDecoderTest {
         val condition = DefaultUrlDecoder.predicate(deeplink)
         val result = DefaultUrlDecoder.decode(deeplink)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(WebUrl("https://www.trendyol.com"), result)
+        assertEquals(true, condition)
+        assertEquals(WebUrl("https://www.trendyol.com"), result)
     }
 
 }

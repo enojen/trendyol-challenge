@@ -2,7 +2,7 @@ package com.trendyol.converters.encoders
 
 import com.trendyol.model.DeepLink
 import com.trendyol.model.WebUrl
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 
@@ -15,8 +15,8 @@ class ProductUrlEncoderTest {
         val condition = ProductUrlEncoder.predicate(webUrl)
         val result = ProductUrlEncoder.encode(webUrl)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(DeepLink("ty://?Page=Product&ContentId=1234"), result)
+        assertEquals(true, condition)
+        assertEquals(DeepLink("ty://?Page=Product&ContentId=1234"), result)
     }
 
     @Test
@@ -26,8 +26,8 @@ class ProductUrlEncoderTest {
         val condition = ProductUrlEncoder.predicate(webUrl)
         val result = ProductUrlEncoder.encode(webUrl)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(DeepLink("ty://?Page=Product&ContentId=1234&CampaignId=11"), result)
+        assertEquals(true, condition)
+        assertEquals(DeepLink("ty://?Page=Product&ContentId=1234&CampaignId=11"), result)
     }
 
     @Test
@@ -37,8 +37,8 @@ class ProductUrlEncoderTest {
         val condition = ProductUrlEncoder.predicate(webUrl)
         val result = ProductUrlEncoder.encode(webUrl)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(DeepLink("ty://?Page=Product&ContentId=1234&MerchantId=11"), result)
+        assertEquals(true, condition)
+        assertEquals(DeepLink("ty://?Page=Product&ContentId=1234&MerchantId=11"), result)
     }
 
     @Test
@@ -48,8 +48,8 @@ class ProductUrlEncoderTest {
         val condition = ProductUrlEncoder.predicate(webUrl)
         val result = ProductUrlEncoder.encode(webUrl)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(DeepLink("ty://?Page=Product&ContentId=1234&CampaignId=11&MerchantId=22"), result)
+        assertEquals(true, condition)
+        assertEquals(DeepLink("ty://?Page=Product&ContentId=1234&CampaignId=11&MerchantId=22"), result)
     }
 
     @Test
@@ -57,7 +57,7 @@ class ProductUrlEncoderTest {
         val webUrl = WebUrl("http://trendyol.com/brand/model-p-XXXX")
         val condition = ProductUrlEncoder.predicate(webUrl)
 
-        Assertions.assertEquals(false, condition)
+        assertEquals(false, condition)
     }
 
 }

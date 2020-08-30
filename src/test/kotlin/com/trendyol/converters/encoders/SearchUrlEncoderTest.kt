@@ -2,7 +2,7 @@ package com.trendyol.converters.encoders
 
 import com.trendyol.model.DeepLink
 import com.trendyol.model.WebUrl
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 
@@ -15,8 +15,8 @@ class SearchUrlEncoderTest {
         val condition = SearchUrlEncoder.predicate(webUrl)
         val result = SearchUrlEncoder.encode(webUrl)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(DeepLink("ty://?Page=Search"), result)
+        assertEquals(true, condition)
+        assertEquals(DeepLink("ty://?Page=Search"), result)
     }
 
     @Test
@@ -26,7 +26,7 @@ class SearchUrlEncoderTest {
         val condition = SearchUrlEncoder.predicate(webUrl)
         val result = SearchUrlEncoder.encode(webUrl)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(DeepLink("ty://?Page=Search&Query=ĞİŞ"), result)
+        assertEquals(true, condition)
+        assertEquals(DeepLink("ty://?Page=Search&Query=ĞİŞ"), result)
     }
 }

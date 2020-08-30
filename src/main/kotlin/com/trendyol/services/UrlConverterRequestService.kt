@@ -21,7 +21,7 @@ class UrlConverterRequestService(val urlRequestRepo: UrlRequestRepo, val urlConv
         return webUrl
     }
 
-    fun saveRequest(webUrl: WebUrl, deepLink: DeepLink) {
+    private fun saveRequest(webUrl: WebUrl, deepLink: DeepLink) {
         val urlRequest = UrlRequest(id = 0, webUrl = webUrl.url, deepLink = deepLink.url)
         urlRequestRepo.save(urlRequest)
     }

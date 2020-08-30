@@ -6,6 +6,7 @@ import com.trendyol.services.SectionService
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 
@@ -21,8 +22,8 @@ class HomeUrlDecoderTest {
         val condition = decoder.predicate(deeplink)
         val result = decoder.decode(deeplink)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(WebUrl("https://www.trendyol.com"), result)
+        assertEquals(true, condition)
+        assertEquals(WebUrl("https://www.trendyol.com"), result)
     }
 
     @Test
@@ -36,8 +37,8 @@ class HomeUrlDecoderTest {
         val condition = decoder.predicate(deeplink)
         val result = decoder.decode(deeplink)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(WebUrl("https://www.trendyol.com/butik/liste/erkek"), result)
+        assertEquals(true, condition)
+        assertEquals(WebUrl("https://www.trendyol.com/butik/liste/erkek"), result)
     }
 
 }

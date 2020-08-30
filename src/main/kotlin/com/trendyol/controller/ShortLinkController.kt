@@ -3,28 +3,17 @@ package com.trendyol.controller
 import com.trendyol.DeepLinkRequest
 import com.trendyol.model.DeepLink
 import com.trendyol.model.WebUrl
+import com.trendyol.model.web.ShortLinkResponse
 import com.trendyol.services.ShortLinkService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.net.URL
 
 
 @RestController
+@RequestMapping("/api/shortlink")
 class ShortLinkController(val shortLinkService: ShortLinkService) {
 
-    @PostMapping("/shortlink/deeplink")
-    fun fromDeepLink(@RequestBody a: DeepLinkRequest): Any {
-        return shortLinkService.createShortLink(DeepLink(a.url))
-    }
-
-    @PostMapping("/shortlink/url")
-    fun fromWebUrl(@RequestBody a: DeepLinkRequest): Any {
-        return shortLinkService.createShortLink(WebUrl(a.url))
-    }
-
-    @GetMapping("/shortlink/details")
+    @GetMapping
     fun details(@RequestBody a: DeepLinkRequest): Any {
 
         val hash = URL(a.url).path.split("/")[1]
@@ -38,5 +27,13 @@ class ShortLinkController(val shortLinkService: ShortLinkService) {
         }
     }
 
-    data class ShortLinkResponse(val webUrl: String, val deepLink: String, val error: String? = null)
+    @PostMapping("/from-deeplink")
+    fun fromDeepLink(@RequestBody a: DeepLinkRequest): Any {
+        return shortLinkService.createShortLink(DeepLink(a.url))
+    }
+
+    @PostMapping("/from-weburl")
+    fun fromWebUrl(@RequestBody a: DeepLinkRequest): Any {
+        return shortLinkService.createShortLink(WebUrl(a.url))
+    }
 }

@@ -1,6 +1,6 @@
 package com.trendyol.util
 
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.Test
 
 
@@ -11,7 +11,7 @@ class BaseConversionTest {
         val hash = BaseConversion.encode(Long.MAX_VALUE)
         val id = BaseConversion.decode(hash)
 
-        Assert.assertEquals(Long.MAX_VALUE, id)
+        assertEquals(Long.MAX_VALUE, id)
     }
 
 }

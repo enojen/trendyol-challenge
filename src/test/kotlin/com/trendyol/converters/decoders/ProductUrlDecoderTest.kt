@@ -3,6 +3,7 @@ package com.trendyol.converters.decoders
 import com.trendyol.model.DeepLink
 import com.trendyol.model.WebUrl
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 
@@ -15,8 +16,8 @@ class ProductUrlDecoderTest {
         val condition = ProductUrlDecoder.predicate(deeplink)
         val result = ProductUrlDecoder.decode(deeplink)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(WebUrl("https://www.trendyol.com/brand/name-p-123"), result)
+        assertEquals(true, condition)
+        assertEquals(WebUrl("https://www.trendyol.com/brand/name-p-123"), result)
     }
 
     @Test
@@ -26,8 +27,8 @@ class ProductUrlDecoderTest {
         val condition = ProductUrlDecoder.predicate(deeplink)
         val result = ProductUrlDecoder.decode(deeplink)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(WebUrl("https://www.trendyol.com/brand/name-p-11?boutiqueId=22"), result)
+        assertEquals(true, condition)
+        assertEquals(WebUrl("https://www.trendyol.com/brand/name-p-11?boutiqueId=22"), result)
     }
 
     @Test
@@ -37,8 +38,8 @@ class ProductUrlDecoderTest {
         val condition = ProductUrlDecoder.predicate(deeplink)
         val result = ProductUrlDecoder.decode(deeplink)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(WebUrl("https://www.trendyol.com/brand/name-p-11?merchantId=22"), result)
+        assertEquals(true, condition)
+        assertEquals(WebUrl("https://www.trendyol.com/brand/name-p-11?merchantId=22"), result)
     }
 
     @Test
@@ -48,8 +49,8 @@ class ProductUrlDecoderTest {
         val condition = ProductUrlDecoder.predicate(deeplink)
         val result = ProductUrlDecoder.decode(deeplink)
 
-        Assertions.assertEquals(true, condition)
-        Assertions.assertEquals(WebUrl("https://www.trendyol.com/brand/name-p-11?merchantId=22&boutiqueId=33"), result)
+        assertEquals(true, condition)
+        assertEquals(WebUrl("https://www.trendyol.com/brand/name-p-11?merchantId=22&boutiqueId=33"), result)
     }
 
 
