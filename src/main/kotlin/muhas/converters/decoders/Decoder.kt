@@ -1,7 +1,7 @@
 package muhas.converters.decoders
 
-import muhas.DeepLink
-import muhas.WebUrl
+import muhas.model.DeepLink
+import muhas.model.WebUrl
 
 interface Decoder {
     val predicate: (DeepLink) -> Boolean

@@ -1,6 +1,7 @@
 package muhas.converters.encoders
 
-import muhas.*
+import muhas.model.DeepLink
+import muhas.model.WebUrl
 import muhas.services.SectionService
 import muhas.util.LinkBuilder
 
@@ -18,8 +19,8 @@ data class HomeUrlEncoder(val sectionService: SectionService) : Encoder {
 
         val paths = url.path.split("/")
 
-        if (paths.size == 3) {
-            val sectionName = paths[2]
+        if (paths.size == 4) {
+            val sectionName = paths[3]
             val sectionId = sectionService.getSectionId(sectionName)
             linkBuilder.addParam(Pair("SectionId", sectionId.toString()))
         }

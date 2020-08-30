@@ -1,12 +1,9 @@
 package muhas.controller
 
 import muhas.DeepLinkRequest
-import muhas.ShortLink
-import muhas.repository.redis.CounterRepo
-import muhas.repository.mysql.ShortLinkRepo
+import muhas.model.DeepLink
+import muhas.model.WebUrl
 import muhas.services.ShortLinkService
-import muhas.services.UrlConverterService
-import muhas.util.BaseConversion
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -15,48 +12,16 @@ import java.net.URL
 
 
 @RestController
-class ShortLinkController(val urlConverterService: UrlConverterService,
-                          val shortLinkRepo: ShortLinkRepo,
-                          val shortLiService: ShortLinkService,
-                          val counterRepo: CounterRepo
-                          ) {
-
+class ShortLinkController(val shortLinkService: ShortLinkService) {
 
     @PostMapping("/shortlink/deeplink")
     fun fromDeepLink(@RequestBody a: DeepLinkRequest): Any {
-
-        val shortLinkId = counterRepo.getId()
-
-        val shorLinkHash = BaseConversion.encode(shortLinkId)
-        val webUrl = urlConverterService.toUrl(a).url
-        val deepLink = a.url
-
-        val shortLink = ShortLink(
-                shortLink = shorLinkHash,
-                deepLink = deepLink,
-                webUrl = webUrl
-        )
-
-        val result = shortLinkRepo.save(shortLink)
-        return result
+        return shortLinkService.createShortLink(DeepLink(a.url))
     }
 
     @PostMapping("/shortlink/url")
     fun fromUrl(@RequestBody a: DeepLinkRequest): Any {
-        val shortLinkId = counterRepo.getId()
-
-        val shorLinkHash = BaseConversion.encode(shortLinkId)
-        val deepLink = urlConverterService.toDeepLink(a).deepLink.url
-        val webUrl = a.url
-
-        val shortLink = ShortLink(
-                shortLink = shorLinkHash,
-                deepLink = deepLink,
-                webUrl = webUrl
-        )
-
-        val result = shortLinkRepo.save(shortLink)
-        return result
+        return shortLinkService.createShortLink(WebUrl(a.url))
     }
 
     @GetMapping("/shortlink/details")
@@ -64,7 +29,7 @@ class ShortLinkController(val urlConverterService: UrlConverterService,
 
         val hash = URL(a.url).path.split("/")[1]
 
-        val shortLink = shortLiService.findById(hash)
+        val shortLink = shortLinkService.findById(hash)
 
         return shortLink.map {
             ShortLinkResponse(it.webUrl, it.deepLink)

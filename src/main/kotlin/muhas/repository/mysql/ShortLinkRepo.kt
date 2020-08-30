@@ -1,6 +1,6 @@
 package muhas.repository.mysql
 
-import muhas.ShortLink
+import muhas.model.ShortLink
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 

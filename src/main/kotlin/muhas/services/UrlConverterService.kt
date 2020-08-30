@@ -1,9 +1,5 @@
 package muhas.services
 
-import muhas.DeepLink
-import muhas.DeepLinkRequest
-import muhas.DeepLinkResponse
-import muhas.WebUrl
 import muhas.converters.decoders.DefaultUrlDecoder
 import muhas.converters.decoders.HomeUrlDecoder
 import muhas.converters.decoders.ProductUrlDecoder
@@ -12,14 +8,12 @@ import muhas.converters.encoders.DefaultUrlEncoder
 import muhas.converters.encoders.HomeUrlEncoder
 import muhas.converters.encoders.ProductUrlEncoder
 import muhas.converters.encoders.SearchUrlEncoder
-import muhas.repository.mysql.UrlRequest
-import muhas.repository.mysql.UrlRequestRepo
+import muhas.model.DeepLink
+import muhas.model.WebUrl
 import org.springframework.stereotype.Service
 
 @Service
-class UrlConverterService(sectionMappings: SectionService,
-                          val urlRequestRepo: UrlRequestRepo
-                          ) {
+class UrlConverterService(sectionMappings: SectionService) {
 
     val urlEncoders = listOf(
             HomeUrlEncoder(sectionMappings),
@@ -35,21 +29,16 @@ class UrlConverterService(sectionMappings: SectionService,
             DefaultUrlDecoder
     )
 
-    fun toDeepLink(request: DeepLinkRequest): DeepLinkResponse {
-        val webUrl = WebUrl(request.url)
-        val deepLink = urlEncoders
+    fun toDeepLink(webUrl: WebUrl): DeepLink {
+        return urlEncoders
                 .first { it.predicate(webUrl) }
                 .encode(webUrl)
-
-        return DeepLinkResponse(deepLink)
     }
 
-    fun toUrl(request: DeepLinkRequest): WebUrl {
-        val deepLink = DeepLink(request.url)
+    fun toWebUrl(deepLink: DeepLink): WebUrl {
         return urlDecoders
                 .first { it.predicate(deepLink) }
                 .decode(deepLink)
-
     }
 
 }

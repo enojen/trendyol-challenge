@@ -1,8 +1,7 @@
 package muhas.converters.decoders
 
-import muhas.DeepLink
-import muhas.WebUrl
-import muhas.services.SectionService
+import muhas.model.DeepLink
+import muhas.model.WebUrl
 import muhas.util.LinkBuilder
 
 

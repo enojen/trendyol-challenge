@@ -1,8 +1,8 @@
 package muhas.converters.encoders
 
-import muhas.DeepLink
+import muhas.model.DeepLink
+import muhas.model.WebUrl
 import muhas.util.LinkBuilder
-import muhas.WebUrl
 
 object ProductUrlEncoder : Encoder {
     private val regex = Regex("(.*)-p-(\\d+)")

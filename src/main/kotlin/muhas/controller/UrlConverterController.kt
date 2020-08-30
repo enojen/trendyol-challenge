@@ -1,33 +1,24 @@
 package muhas.controller
 
 import muhas.DeepLinkRequest
-import muhas.repository.mysql.UrlRequest
-import muhas.repository.mysql.UrlRequestRepo
-import muhas.services.UrlConverterService
+import muhas.model.DeepLink
+import muhas.model.WebUrl
+import muhas.services.UrlConverterRequestService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
-class UrlConverterController(val urlConverterService: UrlConverterService,
-                             val urlRequestRepo: UrlRequestRepo) {
+class UrlConverterController(val urlConverterRequestService: UrlConverterRequestService) {
 
     @PostMapping("/deeplink")
     fun toDeeplink(@RequestBody a: DeepLinkRequest): Any {
-
-        val result = urlConverterService.toDeepLink(a)
-        urlRequestRepo.save(UrlRequest(0, deepLink = result.deepLink.url, webUrl = a.url))
-
-        return result
+        return urlConverterRequestService.convert(WebUrl(a.url))
     }
 
     @PostMapping("/url")
     fun toUrl(@RequestBody a: DeepLinkRequest): Any {
-
-        val result = urlConverterService.toUrl(a)
-
-        println(result)
-        return result
+        return urlConverterRequestService.convert(DeepLink(a.url))
     }
 }

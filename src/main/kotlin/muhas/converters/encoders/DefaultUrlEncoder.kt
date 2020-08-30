@@ -1,13 +1,13 @@
 package muhas.converters.encoders
 
-import muhas.DeepLink
-import muhas.WebUrl
+import muhas.model.DeepLink
+import muhas.model.WebUrl
 
 
 object DefaultUrlEncoder : Encoder {
     override val predicate = { url: WebUrl -> true }
 
     override val encode = { p: WebUrl ->
-        DeepLink("Page=Home")
+        DeepLink("ty://?Page=Home")
     }
 }
