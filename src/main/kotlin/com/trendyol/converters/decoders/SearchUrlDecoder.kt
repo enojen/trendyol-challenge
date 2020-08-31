@@ -7,17 +7,16 @@ import com.trendyol.util.LinkBuilder
 
 object SearchUrlDecoder : Decoder {
     override val predicate = { deepLink: TyDeepLink ->
-        deepLink.params.contains(Pair(PAGE_PARAM, SEARCH_PARAM))
+        deepLink.params.contains(Pair(PAGE_PARAM, SEARCH_PARAM)) and deepLink.hasParam(QUERY_PARAM)
     }
 
     override val decode = { deepLink: TyDeepLink ->
-        val linkBuilder = LinkBuilder().addPath(ALL_PRODUCTS)
-        val queryParam = deepLink.getParam(QUERY_PARAM)
+        val queryParam = deepLink.getParam(QUERY_PARAM)!!
 
-        queryParam?.let {
-            linkBuilder.addParam(Q_PARAM, it.second)
-        }
+        LinkBuilder()
+                .addPath(ALL_PRODUCTS)
+                .addParam(Q_PARAM, queryParam.second)
+                .buildLink()
 
-        linkBuilder.buildLink()
     }
 }

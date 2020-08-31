@@ -8,17 +8,15 @@ import com.trendyol.util.LinkBuilder
 object SearchUrlEncoder : Encoder {
 
     override val predicate = { link: TyLink ->
-        link.path == ALL_PRODUCTS && link.hasParam(Q_PARAM)
+        (link.path == ALL_PRODUCTS) and (link.hasParam(Q_PARAM))
     }
 
     override val encode = { link: TyLink ->
-        val linkBuilder = LinkBuilder().addParam(PAGE_PARAM, SEARCH_PARAM)
+        val queryParam = link.getParam(Q_PARAM)!!
 
-        link.params.forEach {
-            if (it.first == Q_PARAM)
-                linkBuilder.addParam(QUERY_PARAM, it.second)
-        }
-
-        linkBuilder.buildDeepLink()
+        LinkBuilder()
+                .addParam(PAGE_PARAM, SEARCH_PARAM)
+                .addParam(QUERY_PARAM, queryParam.second)
+                .buildDeepLink()
     }
 }
